@@ -8,6 +8,7 @@ public class bullate : MonoBehaviour
 {
     public float Speed;
     private Rigidbody2D Rigidbody2D;
+    private Vector2 Direction;
     
 
     // Start is called before the first frame update
@@ -18,6 +19,14 @@ public class bullate : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Rigidbody2D.velocity = Vector2.right * Speed;
+        Rigidbody2D.velocity = transform.right * Speed; // Mover en la dirección local hacia adelante (derecha)
     }
+
+    public void SetDirection (Vector2 direction)
+    {
+        // Girar el bullet en la dirección correcta
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+    
 }

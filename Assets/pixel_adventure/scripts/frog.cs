@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class frog : MonoBehaviour
 {
+    public GameObject bullets;
     public float runSpeed = 2;
     public float jumpSpeed = 3;
     Rigidbody2D rb2D;
@@ -11,7 +12,7 @@ public class frog : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Animator animator;
 
-
+ 
 
     void Start()
     {
@@ -41,10 +42,37 @@ public class frog : MonoBehaviour
 
         }
 
+        //Salto
         if (Input.GetKey("space") && checkground.isGround)
         {
             rb2D.velocity = new Vector2(rb2D.velocity.x, jumpSpeed);
             animator.SetBool("Run", false);
         }
+        //Disparo
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Shoot();
+        }
+
     }
+
+    private void Shoot()
+    {
+        // Determinar la dirección del disparo (hacia la derecha o la izquierda)
+        Vector2 direction = spriteRenderer.flipX ? Vector2.left : Vector2.right;
+
+        // Instanciar el bullet y configurar su dirección
+        GameObject bulletObject = Instantiate(bullets, transform.position, Quaternion.identity);
+        bullate bulletScript = bulletObject.GetComponent<bullate>();
+        if (bulletScript != null)
+        {
+            bulletScript.SetDirection(direction);
+        }
+
+    }
+
+
+
 }
+
+
